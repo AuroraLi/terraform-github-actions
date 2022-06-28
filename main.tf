@@ -73,3 +73,16 @@ module "hello_service" {
   cluster           = "demo"
   location          = "${var.location}-c"
 }
+
+module "new_service" {
+  providers = {
+    github = github.github
+  }
+  source            = "./modules/new_svc"
+  service_name      = "new"
+  workload_identity = module.gh_oidc.provider_name
+  service_account   = google_service_account.gke_sa.email
+  project_id        = var.project_id
+  cluster           = "demo"
+  location          = "${var.location}-c"
+}
